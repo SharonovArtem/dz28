@@ -10,21 +10,19 @@ namespace dzkurs
     {
         static void Main(string[] args)
         {
-            double health = 70;
+            double healthPercent = 70;
             double maxHealth = 10;
-            DrawBar(health, maxHealth, ConsoleColor.Red);
+            DrawBar(healthPercent, maxHealth, ConsoleColor.Red);
         }
 
-        static void DrawBar(double value, double maxValue, ConsoleColor color)
+        static void DrawBar(double coloredPercent, double maxBarValue, ConsoleColor color)
         {
+            double minimalNumberForCycle = 0;
             ConsoleColor defaultColor = Console.BackgroundColor;
-            double coloredBar = maxValue / 100 * value;
+            double coloredBar = maxBarValue / 100 * coloredPercent;
             string bar = "";
 
-            for (int i = 0; i < coloredBar; i++)
-            {
-                bar += ' ';
-            }
+            DoCycle(ref minimalNumberForCycle, ref coloredBar, ref bar);
 
             Console.SetCursorPosition(0, 0);
             Console.Write('[');
@@ -34,12 +32,17 @@ namespace dzkurs
 
             bar = "";
 
-            for (int i = Convert.ToInt32(coloredBar); i < maxValue; i++)
+            DoCycle(ref coloredBar, ref maxBarValue, ref bar);
+
+            Console.Write(bar + ']');
+        }
+
+        static void DoCycle(ref double value, ref double maxValue, ref string bar)
+        {
+            for (int i = Convert.ToInt32(value); i < Convert.ToInt32(maxValue); i++)
             {
                 bar += ' ';
             }
-
-            Console.Write(bar + ']');
         }
     }
 }
